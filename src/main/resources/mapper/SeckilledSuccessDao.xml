@@ -1,41 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seckill.dao.SeckilledSuccessDao">
-	<insert id="insertSeckilledSuccess">
-		<!-- 当主键冲突的时候不报错而是返回0 -->
-		INSERT IGNORE INTO seckill_success (
-		seckill_id,
-		seckill_user_phone
-		)
-		VALUES
-		(
-		#(seckillId),#(seckillUserPhone)
-		)
-	</insert>
-	<select id="queryByIdWithSeckill" resultType="SeckilledSuccess">
-		<!-- 根据商品ID查询秒杀成功的对象并携带秒杀的对象 -->
-		SELECT
-		ss.seckill_id,
-		ss.seckill_user_phone,
-		ss.seckill_state,
-		ss.seckill_create_time,
-		s.seckill_id AS "seckill.seckill_id",
-		s.seckill_name AS "seckill.seckill_name",
-		s.seckill_number AS
-		"seckill.seckill_number",
-		s.seckill_start_time AS
-		"seckill.seckill_start_time",
-		s.seckill_end_time AS
-		"seckill.seckill_end_time",
-		s.seckill_create_time AS
-		"seckill.seckill_create_time"
-		FROM
-		seckill_success ss
-		INNER JOIN seckill
-		s ON ss.seckill_id = s.seckill_id
-		WHERE
-		ss.seckill_id = #{seckillId}
-	</select>
+    <insert id="insertSeckilledSuccess">
+        <!-- 当主键冲突的时候不报错而是返回0 -->
+        INSERT IGNORE INTO seckill_success (
+        seckill_id,
+        seckill_user_phone
+        )
+        VALUES
+        (
+        #{seckillId},#{seckillUserPhone}
+        )
+    </insert>
+    <select id="queryByIdWithSeckill" resultType="SeckilledSuccess">
+        <!-- 根据商品ID查询秒杀成功的对象并携带秒杀的对象 -->
+        SELECT
+        ss.seckill_id,
+        ss.seckill_user_phone,
+        ss.seckill_state,
+        ss.seckill_create_time,
+        s.seckill_id AS "seckill.seckill_id",
+        s.seckill_name AS "seckill.seckill_name",
+        s.seckill_number AS "seckill.seckill_number",
+        s.seckill_start_time AS "seckill.seckill_start_time",
+        s.seckill_end_time AS "seckill.seckill_end_time",
+        s.seckill_create_time AS "seckill.seckill_create_time"
+        FROM
+        seckill_success ss
+        INNER JOIN seckill s ON ss.seckill_id = s.seckill_id
+        WHERE
+        ss.seckill_id = #{seckillId}
+        AND ss.seckill_user_phone = #{seckillUserPhone}
+    </select>
 </mapper>

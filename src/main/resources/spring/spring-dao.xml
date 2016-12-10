@@ -11,9 +11,9 @@
 	<!-- 2:数据库连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 配置连接池属性 -->
-		<property name="driverClass" value="${driver}" />
-		<property name="jdbcUrl" value="${url}" />
-		<property name="user" value="${username}" />
+		<property name="driverClass" value="${driverClass}" />
+		<property name="jdbcUrl" value="${jdbcUrl}" />
+		<property name="user" value="${user}" />
 		<property name="password" value="${password}" />
 		<!-- c3p0连接池的私有属性 -->
 		<!-- 最大连接数 -->
