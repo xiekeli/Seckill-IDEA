@@ -3,6 +3,8 @@ package com.seckill.service;
 import com.seckill.dto.SeckillExcution;
 import com.seckill.dto.SeckillExposer;
 import com.seckill.entity.Seckill;
+import com.seckill.exception.SeckillCloseException;
+import com.seckill.exception.SeckillRepeatException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -46,10 +48,40 @@ public class SeckillServiceTest {
     @Test
     public void executeSeckill() throws Exception {
         long id = 1000;
-        long phone = 15600008888L;
+        long phone = 15600008887L;
         String md5 = "03ecb8a5252ddd438365c62aaadb3b46";
-        SeckillExcution seckillExcution = seckillService.executeSeckill(id, phone, md5);
-        logger.info("seckillExcution={}", seckillExcution);
+        try {
+            SeckillExcution seckillExcution = seckillService.executeSeckill(id, phone, md5);
+            logger.info("seckillExcution={}", seckillExcution);
+        } catch (SeckillCloseException e) {
+            logger.error(e.getMessage());
+        } catch (SeckillRepeatException e) {
+            logger.error(e.getMessage());
+        }
     }
 
+    /*可重复执行的集成测试完整逻辑*/
+    @Test
+    public void testSeckill() throws Exception {
+        long id = 1000;
+        SeckillExposer seckillExposer = seckillService.exportSeckillUrl(id);
+        if (seckillExposer.isExposer()) {
+            logger.info("seckillExposer={}", seckillExposer);
+            long phone = 15600008887L;
+            String md5 = seckillExposer.getMd5();
+            try {
+                SeckillExcution seckillExcution = seckillService.executeSeckill(id, phone, md5);
+                logger.info("seckillExcution={}", seckillExcution);
+            } catch (SeckillCloseException e) {
+                logger.error(e.getMessage());
+            } catch (SeckillRepeatException e) {
+                logger.error(e.getMessage());
+            }
+        } else {
+            /*秒杀未开启*/
+            logger.warn("seckillExposer={}", seckillExposer);
+        }
+
+        /*exposer=true, md5='03ecb8a5252ddd438365c62aaadb3b46', seckillId=1000*/
+    }
 }
