@@ -88,7 +88,7 @@ public class SeckillServiceImpl implements SeckillService {
             } else {
             /*获取秒杀成功的更新条数*/
                 int insertCount = seckilledSuccessDao.insertSeckilledSuccess(seckillId, seckillUserPhone);
-                if (insertCount < 0) {
+                if (insertCount < 1) {
                     /*抛出重复秒杀异常*/
                     throw new SeckillRepeatException("重复秒杀！");
                 } else {
