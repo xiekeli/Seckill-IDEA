@@ -44,7 +44,7 @@ public class SeckillController {
         if (seckill == null) {
             return "forward:/seckill/list";
         }
-        model.addAttribute("secill", seckill);
+        model.addAttribute("seckill", seckill);
         return "detail";
     }
 

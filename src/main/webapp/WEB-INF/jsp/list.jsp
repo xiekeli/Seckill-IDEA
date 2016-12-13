@@ -12,9 +12,9 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading text-center">
-            <h2>
+            <h1>
                 秒杀列表
-            </h2>
+            </h1>
         </div>
         <div class="panel-body">
             <table class="table table-hover">
@@ -43,7 +43,7 @@
                                 <fmt:formatDate value="${sk.seckillCreateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </td>
                             <td>
-                                <a class="btn btn-info" href="/seckill/${sk.seckillId}/detail" target="_blank">link</a>
+                                <a class="btn btn-info" href="/seckill/${sk.seckillId}/detail.html" target="_blank">link</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -52,5 +52,7 @@
         </div>
     </div>
 </div>
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
